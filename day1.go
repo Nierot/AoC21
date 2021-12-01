@@ -6,7 +6,7 @@ import (
 
 func D1P1() int {
 	var (
-		input          = util.GrabIntInput(1, 1)
+		input          = util.GrabIntInput(1)
 		depthIncreases = -1
 		previous       = 0
 	)
@@ -22,7 +22,7 @@ func D1P1() int {
 
 func D1P2() int {
 	var (
-		input          = util.GrabIntInput(1, 1)
+		input          = util.GrabIntInput(1)
 		window1        = 0
 		window2        = 0
 		depthIncreases = 0

@@ -10,15 +10,14 @@ import (
 )
 
 const (
-	part1Link = "https://adventofcode.com/2021/day/%d/input"
-	part2Link = "https://adventofcode.com/2021/day/%d/answer"
+	inputLink = "https://adventofcode.com/2021/day/%d/input"
 )
 
-func GrabIntInput(day int, part int) []int {
+func GrabIntInput(day int) []int {
 	var input []string
 	var output []int
 
-	input = GrabInput(day, part)
+	input = GrabInput(day)
 
 	for _, line := range input {
 		integer, _ := strconv.Atoi(line)
@@ -28,17 +27,12 @@ func GrabIntInput(day int, part int) []int {
 	return output
 }
 
-func GrabInput(day int, part int) []string {
-	var link string
-	if part == 1 {
-		link = fmt.Sprintf(part1Link, day)
-	} else {
-		link = fmt.Sprintf(part2Link, day)
-	}
+func GrabInput(day int) []string {
+	link := fmt.Sprintf(inputLink, day)
 
-	if fileExists(day, part) {
+	if fileExists(day) {
 		log.Println("File exists: reading from file")
-		return readFromFile(day, part)
+		return readFromFile(day)
 	}
 
 	req, err := http.NewRequest("GET", link, nil)
@@ -55,15 +49,15 @@ func GrabInput(day int, part int) []string {
 		panic(err)
 	}
 
-	writeToFile(day, part, strings.Split(string(body), "\n"))
+	writeToFile(day, strings.Split(string(body), "\n"))
 
 	return strings.Split(string(body), "\n")
 }
 
-func readFromFile(day, part int) []string {
+func readFromFile(day int) []string {
 	var filename string
 
-	filename = fmt.Sprintf("input/d%dp%d.txt", day, part)
+	filename = fmt.Sprintf("input/d%d.txt", day)
 
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -73,9 +67,9 @@ func readFromFile(day, part int) []string {
 	return strings.Split(string(data), "\n")
 }
 
-func fileExists(day int, part int) bool {
+func fileExists(day int) bool {
 	var filename string
-	filename = fmt.Sprintf("input/d%dp%d.txt", day, part)
+	filename = fmt.Sprintf("input/d%d.txt", day)
 
 	if _, err := ioutil.ReadFile(filename); err == nil {
 		return true
@@ -83,10 +77,10 @@ func fileExists(day int, part int) bool {
 	return false
 }
 
-func writeToFile(day int, part int, data []string) {
+func writeToFile(day int, data []string) {
 	var filename string
 
-	filename = fmt.Sprintf("input/d%dp%d.txt", day, part)
+	filename = fmt.Sprintf("input/d%d.txt", day)
 
 	err := ioutil.WriteFile(filename, []byte(strings.Join(data, "\n")), 0644)
 	if err != nil {
