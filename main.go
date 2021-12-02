@@ -8,7 +8,7 @@ import (
 type solver func() int
 
 func main() {
-	Run(1, 2, D1P2)
+	Run(2, 2, D2P2)
 }
 
 func Run(day int, part int, solver solver) {

@@ -13,6 +13,8 @@ const (
 	inputLink = "https://adventofcode.com/2021/day/%d/input"
 )
 
+// Grab the input for the current puzzle in the form of an int array
+// Day 0 is for the example
 func GrabIntInput(day int) []int {
 	var input []string
 	var output []int
@@ -24,7 +26,7 @@ func GrabIntInput(day int) []int {
 		output = append(output, integer)
 	}
 
-	return output
+	return output[:len(output)-1]
 }
 
 func GrabInput(day int) []string {
@@ -51,7 +53,10 @@ func GrabInput(day int) []string {
 
 	writeToFile(day, strings.Split(string(body), "\n"))
 
-	return strings.Split(string(body), "\n")
+	slice := strings.Split(string(body), "\n")
+	slice = slice[:len(slice)-1]
+
+	return slice
 }
 
 func readFromFile(day int) []string {
